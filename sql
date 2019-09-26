@@ -69,3 +69,43 @@ WHERE staff_id = (SELECT staff_id
 -- 5a) What rating ('PG', 'G', etc) has the least films?
 -- 5b) Return all films that have the rating that is biggest category 
 -- (ie. rating with the highest count of films)
+
+
+
+
+--Question 1
+SELECT title, length
+FROM film
+WHERE length <(SELECT AVG(length)
+FROM film
+);
+
+--Question 2
+SELECT title, rental_rate
+FROM film
+WHERE rental_rate = (SELECT MIN(rental_rate)
+FROM film
+);
+
+--Question 3
+SELECT amount
+FROM payment
+WHERE amount <(SELECT AVG(amount)
+FROM payment);
+
+--Question 4
+SELECT * 
+FROM payment
+WHERE customer_id=(SELECT customer_id
+FROM payment
+ORDER BY payment_date
+LIMIT 1);
+
+-- Question 5
+SELECT title
+FROM film
+WHERE rating = (SELECT rating, COUNT(rating)
+FROM film
+GROUP BY rating
+ORDER BY COUNT(rating) DESC
+LIMIT 1);
